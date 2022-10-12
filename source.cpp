@@ -8,12 +8,10 @@ class node
     public:
     
     int id;
-    string firstname;
-    string lastname;
+    string name;
     int phone;
     string *address;
     string designation;
-    string department;
     int salary;
     
     static int i;
@@ -23,24 +21,25 @@ class node
 
     node()
     {
-        firstname="";
-        lastname="";
+        name="";
         phone=0;
         address=new string[4];
         designation="";
-        department="";
         salary=0;
+        lchild=NULL;
+        rchild=NULL;
     }
-    node(string f,string l,int p,string a[],string de,string d,int s)
+    node(string n,int p,string a[],string de,string d,int s)
     {
         id=i++;
-        firstname=f;
-        lastname=l;
+        name=n;
         phone=p;
         address=new string[4];
         address=a;
         designation=de;
         salary=s;
+        lchild=NULL;
+        rchild=NULL;
     }
 };
 int node::i=1;
@@ -254,10 +253,7 @@ class Employee_record
         node* p=new node;
         cout<<"Enter the details of the employee\n";
         cout<<"Enter id will be automatically insert\n";
-        cout<<"Enter first name of the employee:\n";
-        cin>>p->firstname;
-        cout<<"Enter last name of the employee:\n";
-        cin>>p->lastname;
+        cin>>p->name;
         cout<<"Enter phone name of the employee:\n";
         cin>>p->phone;
         cout<<"Enter address line 1 of the employee:\n";
@@ -268,13 +264,13 @@ class Employee_record
         cin>>p->address[2];
         cout<<"Enter country:\n";
         cin>>p->address[3];
-        cout<<"Enter designation:\n";
-        cin>>p->designation;
         cout<<"Enter department:\n";
         cin>>p->department;
         cout<<"Enter salary of the employee:\n";
         cin>>p->salary;
         rinsert(root,p);
+        cout<<"Record Inserted***\n";
+        showMenu();
     }
     
     void deleteEmployee()
@@ -314,8 +310,7 @@ class Employee_record
 
 void showMenu()
 {
-    system ("cls");
-    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"\n********Enter your choice for what you want to do :********\n"<<endl;
     cout<<"**<1> for inserting a new employee record ***\n";
