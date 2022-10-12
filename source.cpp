@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h> //to use system("CLS")
+#include <bits/stdc++.h>
 using namespace std;
 
 class node
@@ -20,7 +21,16 @@ class node
     node* rchild;
     int height;
 
-    node(){}
+    node()
+    {
+        firstname="";
+        lastname="";
+        phone=0;
+        address=new string[4];
+        designation="";
+        department="";
+        salary=0;
+    }
     node(string f,string l,int p,string a[],string de,string d,int s)
     {
         id=i++;
@@ -145,41 +155,160 @@ class Employee_record
     
     node* rinsert(node* p,node *q)
     {
-           
+        int key=q->id;
+        node *t;
+        if(root=NULL)
+        {
+            root=q;
+        }
+        if(key<p->id)
+        {
+            p->lchild=rinsert(p->lchild,q);
+        }       
+        else if(key>p->id)
+        {
+            p->rchild=rinsert(p->rchild,q);
+        }
+        p->height=NodeHeight(p);
+        if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==1)
+            return LLRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==-1)
+            return LRRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->rchild)==1)
+            return RRRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->rchild)==-1)
+            return RLRotation(p);
+        return p;
     }
+
+    node* inPre(node* p)
+    {
+        while (p && p->rchild!=NULL)
+        {
+            p = p->rchild;
+        }
+        return p;
+    } 
+
+    node* inSucc(node* p)
+    {
+        while (p && p->lchild!=NULL)
+        {
+            p = p->lchild;
+        }
+        return p;
+    }
+
     node* deletion(node* p,int key)
     {
-        
+        if(p==NULL)return NULL;
+        if(p->lchild==NULL && p->rchild==NULL)
+        {
+            if(p==root)root=NULL;
+            delete p;
+        }
+        if(key<p->id)p->lchild=deletion(p->lchild,key);
+        else if(key>p->id)p->rchild=deletion(p->rchild,key);
+        else
+        {
+            node* q;
+            if(NodeHeight(p->lchild)>NodeHeight(p->rchild))
+            {
+                q=inPre(p->lchild);
+                q->id=p->id;
+                p->lchild=deletion(p->lchild,q->id);
+            }
+            else
+            {
+                q=inSucc(p->rchild);
+                p->id=q->id;
+                p->rchild=deletion(p->rchild,q->id);
+            }
+        }
+        p->height=(NodeHeight(p));
+        if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==1)
+            return LLRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==-1)
+            return LRRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->rchild)==1)
+            return RRRotation(p);
+        else if(BalanceFactor(p)==2 && BalanceFactor(p->rchild)==-1)
+            return RLRotation(p);
+        return p;
     }
-    node* search(node* p)
+
+    node* search(int key)
     {
-        
+        node* p=root;
+        while(p)
+        {
+            if(key==p->id)return p;
+            else if(key<p->id)p=p->lchild;
+            else p=p->rchild;
+        }
+        return NULL;
     }
     
     void insertEmployee()
     {
-        
+        node* p=new node;
+        cout<<"Enter the details of the employee\n";
+        cout<<"Enter id will be automatically insert\n";
+        cout<<"Enter first name of the employee:\n";
+        cin>>p->firstname;
+        cout<<"Enter last name of the employee:\n";
+        cin>>p->lastname;
+        cout<<"Enter phone name of the employee:\n";
+        cin>>p->phone;
+        cout<<"Enter address line 1 of the employee:\n";
+        getline(cin,p->address[0]);
+        cout<<"Enter city:\n";
+        cin>>p->address[1];
+        cout<<"Enter state:\n";
+        cin>>p->address[2];
+        cout<<"Enter country:\n";
+        cin>>p->address[3];
+        cout<<"Enter designation:\n";
+        cin>>p->designation;
+        cout<<"Enter department:\n";
+        cin>>p->department;
+        cout<<"Enter salary of the employee:\n";
+        cin>>p->salary;
+        rinsert(root,p);
     }
     
     void deleteEmployee()
     {
-        
+        cout<<"Enter the id of the employee you want to delete: ";
+        int id;
+        cin>>id;
+        deletion(root,id);
     }
     void searchEmployee()
     {
-        
+        cout<<"Enter the id of the employee you want to search: ";
+        int id;
+        cin>>id;
+        node *p=search(id);
+        display(p);
     }
     void modifyEmployee()
     {
         
     }
-    void display()
+    void display(node* p)
     {
         
     }
-    void displayRecord(node* p)
+    void displayRecords(node* p)//display all record using inorder traversal
     {
-        
+
+        if(p)
+        {
+            displayRecords(p->lchild);
+            display(p);
+            displayRecords(p->rchild);
+        }
     }
 };
 
@@ -217,7 +346,8 @@ void showMenu()
         obj.modifyEmployee();
         break;
         case 5:
-        obj.display();
+        cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        obj.displayRecords(obj.root);
         break;
         case 0:
         exit(0);
