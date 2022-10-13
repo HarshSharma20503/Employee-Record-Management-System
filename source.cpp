@@ -10,10 +10,10 @@ class node
 
     int id;
     string name;
-    long phone;
+    long long phone;
     string *address;
     string designation;
-    int salary;
+    long long salary;
 
     static int i;
     node* lchild;
@@ -255,14 +255,20 @@ class Employee_record
         getline(cin>>ws,p->name);
         cout<<"Enter phone name of the employee:\n";
         cin>>p->phone;
+        cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
         cout<<"Enter address line 1 of the employee:\n";
-        getline(cin>>ws,p->address[0]);
+        string s;
+        getline(cin,s);
+        p->address[0]=s;
         cout<<"Enter city:\n";
-        getline(cin>>ws,p->address[1]);
+        getline(cin>>ws,s);
+        p->address[1]=s;
         cout<<"Enter state:\n";
-        getline(cin>>ws,p->address[2]);
+        getline(cin>>ws,s);
+        p->address[2]=s;
         cout<<"Enter country:\n";
-        getline(cin>>ws,p->address[3]);
+        getline(cin>>ws,s);
+        p->address[3]=s;
         cout<<"Enter designation:\n";
         getline(cin>>ws,p->designation);
         cout<<"Enter salary of the employee:\n";
@@ -384,7 +390,7 @@ class Employee_record
     }
     void display(node* p)
     {
-
+        cout<<p->name<<" "<<p->phone<<" "<<p->address[0]<<" ";
     }
     void displayRecords(node* p)//display all record using inorder traversal
     {
