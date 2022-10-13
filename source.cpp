@@ -289,7 +289,98 @@ class Employee_record
     }
     void modifyEmployee()
     {
-
+        cout<<"Enter the id of the employee you want to modify:";
+        int key;
+        cin>>key;
+        node* p=searchnode(key);
+        cout<<"**<1> for changing name\n";
+        cout<<"**<2> for changing phone number\n";
+        cout<<"**<3> for changing address\n";
+        cout<<"**<4> for changing designation\n";
+        cout<<"**<5> for changing salary\n";
+        int choice;
+        cin>>choice;
+        switch(choice)
+        {
+        case 1:
+            {
+                cout<<"Enter the new name\n";
+                string name;
+                getline(cin,name);
+                p->name=name;
+                break;
+            }
+        case 2:
+            {
+                cout<<"Enter new phone number\n";
+                long n;
+                cin>>n;
+                p->phone=n;
+                break;
+            }
+        case 3:
+        {
+            cout<<"Enter which thing in address you want change:\n";
+            cout<<"<1> for block/street\n";
+            cout<<"<2> for city\n";
+            cout<<"<3> for state\n";
+            cout<<"<4> for country\n";
+            int c;
+            cin>>c;
+            switch(c)
+            {
+            case 1:
+                {
+                    cout<<"Enter new block/street\n";
+                    string s;
+                    getline(cin,s);
+                    p->address[0]=s;
+                    break;
+                }
+            case 2:
+                {
+                    cout<<"Enter new city\n";
+                    string s;
+                    getline(cin,s);
+                    p->address[1]=s;
+                    break;
+                }
+            case 3:
+                {
+                    cout<<"Enter new state\n";
+                    string s;
+                    getline(cin,s);
+                    p->address[2]=s;
+                    break;
+                }
+            case 4:
+                {
+                    cout<<"Enter new country\n";
+                    string s;
+                    getline(cin,s);
+                    p->address[3]=s;
+                    break;
+                }
+            }
+            break;
+        }
+        case 4:
+            {
+                cout<<"Enter new designation\n";
+                string s;
+                getline(cin,s);
+                p->designation=s;
+                break;
+            }
+        case 5:
+            {
+                cout<<"Enter new salary\n";
+                long n;
+                cin>>n;
+                p->salary=n;
+                break;
+            }
+        }
     }
     void display(node* p)
     {
