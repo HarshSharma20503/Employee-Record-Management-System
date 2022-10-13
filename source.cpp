@@ -3,17 +3,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+void showMenu();
 class node
 {
     public:
-    
+
     int id;
     string name;
-    int phone;
+    long phone;
     string *address;
     string designation;
     int salary;
-    
+
     static int i;
     node* lchild;
     node* rchild;
@@ -21,15 +22,12 @@ class node
 
     node()
     {
-        name="";
-        phone=0;
+        id=i++;
         address=new string[4];
-        designation="";
-        salary=0;
         lchild=NULL;
         rchild=NULL;
     }
-    node(string n,int p,string a[],string de,string d,int s)
+    node(string n,long p,string a[],string de,string d,int s)
     {
         id=i++;
         name=n;
@@ -48,111 +46,111 @@ class Employee_record
 {
     public:
     node* root;
-    
+
     Employee_record()
     {
         root=NULL;
     }
-    
-    int NodeHeight(node *p) // return height of the tree
+
+    int NodeHeight(node *p) // returns height of the node
     {
         int hl,hr;
         hl=(p && p->lchild)?p->lchild->height:0;
         hr=(p && p->rchild)?p->rchild->height:0;
         return hl>hr?hl+1:hr+1;
     }
-    
-    int BalanceFactor(node *p)
+
+    int BalanceFactor(node *p) //returns balance factor of the node
     {
         int hl,hr;
         hl=(p && p->lchild)?p->lchild->height:0;
         hr=(p && p->rchild)?p->rchild->height:0;
         return hl-hr;
     }
-    
-    node* LLRotation(node* p)
+
+    node* LLRotation(node* p) //solves LL imbalance
     {
         node* pl=p->lchild;
         node* plr=pl->rchild;
-        
+
         //changing links
         pl->rchild=p;
         p->lchild=plr;
-        
+
         //updating height
         p->height=NodeHeight(p);
         pl->height=NodeHeight(pl);
-        
+
         //updating root
         if(root==p)
         root=pl;
         return pl;
     }
-    
-    node* RRRotation(node* p)
+
+    node* RRRotation(node* p) //solves RR imbalance
     {
         node* pr=p->rchild;
         node* prl=p->lchild;
-        
+
         //changing links
         pr->lchild=p;
         p->rchild=prl;
-        
+
         //updating heights;
         p->height=NodeHeight(p);
         pr->height=NodeHeight(pr);
-        
+
         //updating root
         if(root==p)
         root=pr;
         return pr;
     }
-    
-    node*LRRotation(node *p)
+
+    node*LRRotation(node *p) //solves LR imbalance
     {
         node* pl=p->lchild;
         node* plr=pl->rchild;
-        
+
         //changing links
         pl->rchild=plr->lchild;
         p->lchild=plr->lchild;
         plr->lchild=pl;
         plr->rchild=p;
-        
+
         //updating heights
         pl->height=NodeHeight(pl);
         p->height=NodeHeight(p);
         plr->height=NodeHeight(plr);
-        
+
         //updating root
         if(p==root)
         root=plr;
         return plr;
     }
-    
-    node* RLRotation(node *p)
+
+    node* RLRotation(node *p) //solves RL imbalance
     {
         node* pr=p->rchild;
         node* prl=pr->lchild;
-        
+
         //changing links
         pr->lchild=prl->rchild;
         p->rchild=prl->lchild;
         prl->rchild=pr;
         prl->lchild=p;
-        
+
         //updating height
         pr->height=NodeHeight(pr);
         p->height=NodeHeight(p);
         prl->height=NodeHeight(prl);
-        
+
         //updating root
         if(root==p)
         root=prl;
         return prl;
     }
-    
-    node* rinsert(node* p,node *q)
+
+    node* rinsert(node* p,node *q) //recursive function to insert a node in tree
     {
         int key=q->id;
         node *t;
@@ -163,7 +161,7 @@ class Employee_record
         if(key<p->id)
         {
             p->lchild=rinsert(p->lchild,q);
-        }       
+        }
         else if(key>p->id)
         {
             p->rchild=rinsert(p->rchild,q);
@@ -180,16 +178,16 @@ class Employee_record
         return p;
     }
 
-    node* inPre(node* p)
+    node* inPre(node* p) //returns inorder predecessor
     {
         while (p && p->rchild!=NULL)
         {
             p = p->rchild;
         }
         return p;
-    } 
+    }
 
-    node* inSucc(node* p)
+    node* inSucc(node* p) //returns inorder successor
     {
         while (p && p->lchild!=NULL)
         {
@@ -198,7 +196,7 @@ class Employee_record
         return p;
     }
 
-    node* deletion(node* p,int key)
+    node* deletion(node* p,int key) //recursive function to delete node
     {
         if(p==NULL)return NULL;
         if(p->lchild==NULL && p->rchild==NULL)
@@ -236,7 +234,7 @@ class Employee_record
         return p;
     }
 
-    node* search(int key)
+    node* searchnode(int key) //function to search for a node
     {
         node* p=root;
         while(p)
@@ -247,32 +245,33 @@ class Employee_record
         }
         return NULL;
     }
-    
-    void insertEmployee()
+
+    void insertEmployee()//function to insert employee record
     {
         node* p=new node;
         cout<<"Enter the details of the employee\n";
-        cout<<"Enter id will be automatically insert\n";
-        cin>>p->name;
+        cout<<"ID will be automatically insert.\n";
+        cout<<"Enter name of the employee:\n";
+        getline(cin>>ws,p->name);
         cout<<"Enter phone name of the employee:\n";
         cin>>p->phone;
         cout<<"Enter address line 1 of the employee:\n";
-        getline(cin,p->address[0]);
+        getline(cin>>ws,p->address[0]);
         cout<<"Enter city:\n";
-        cin>>p->address[1];
+        getline(cin>>ws,p->address[1]);
         cout<<"Enter state:\n";
-        cin>>p->address[2];
+        getline(cin>>ws,p->address[2]);
         cout<<"Enter country:\n";
-        cin>>p->address[3];
-        cout<<"Enter department:\n";
-        cin>>p->department;
+        getline(cin>>ws,p->address[3]);
+        cout<<"Enter designation:\n";
+        getline(cin>>ws,p->designation);
         cout<<"Enter salary of the employee:\n";
         cin>>p->salary;
         rinsert(root,p);
         cout<<"Record Inserted***\n";
         showMenu();
     }
-    
+
     void deleteEmployee()
     {
         cout<<"Enter the id of the employee you want to delete: ";
@@ -285,16 +284,16 @@ class Employee_record
         cout<<"Enter the id of the employee you want to search: ";
         int id;
         cin>>id;
-        node *p=search(id);
+        node *p=searchnode(id);
         display(p);
     }
     void modifyEmployee()
     {
-        
+
     }
     void display(node* p)
     {
-        
+
     }
     void displayRecords(node* p)//display all record using inorder traversal
     {
