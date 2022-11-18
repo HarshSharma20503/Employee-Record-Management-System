@@ -1,7 +1,11 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
+//function used
+void showMenu();
+void Welcome();
+
+//class that stores details of the record
 class record
 {
 public:
@@ -16,7 +20,7 @@ public:
     string designation;
     long long salary;
 
-    record()
+    record() //constructor which takes input from user
     {
         address=new string[4];
         cout<<"Enter the details of the employee\n";
@@ -52,11 +56,12 @@ public:
         }
         cout<<endl;
         cout<<"Designation of the employee :"<<designation<<endl;
+        cout<<"Salary of the employee :"<<salary<<endl;
     }
 };
 int record::i=0;
 
-
+/*------------AVL and its node data structure starts from here----------------------*/
 
 class Node 
 {
@@ -83,7 +88,7 @@ class AVL
         root = NULL; 
     }
  
-    // Helper methods for inserting/deleting
+    //***** Helper methods for inserting/deleting *****
     int NodeHeight(Node* p); 
     int BalanceFactor(Node* p); //returns balance factor of the node
     Node* LLRotation(Node* p); //solves LL imbalance 
@@ -93,19 +98,19 @@ class AVL
     Node* InPre(Node* p); //returns inorder predecessor of the node
     Node* InSucc(Node* p); //return inorder successor of the node
  
-    // Recursive insert function
+    //***** Recursive insert function *****
     void Insert();
     Node* rInsert(Node* p, int key,record * details);
     
-    // Traversal
+    //****** Traversal ******
     void Inorder(); //helper function to call recursive inorder function
     void Inorder(Node* p);
 
-    // Delete function
-    void Delete(int key);
+    //***** Delete function *****
+    void Delete();
     Node* Delete(Node* p, int key);
 
-    //Searching for the node
+    //***** Searching for the node *****
     Node* searchNode(int key); //function to search for a node
     
 };
@@ -230,7 +235,30 @@ Node* AVL::InSucc(Node *p)
 void AVL::Insert()
 {
     record* details=new record;
-    root=rInsert(root, details->id,details); 
+    cout<<"Entered record deatils are:\n\n";
+    details->print_records();
+    cout<<"\n *ARE THE DETAILS CORRECT*\n";
+    cout<<"Press Y for YES and N for NO\n";
+    char choice;
+    choi:
+    cin>>choice;
+    if(choice=='Y' || choice=='y')
+    {
+        root=rInsert(root, details->id,details);
+        cout<<"\n***Insertion succesfull***\n";
+    }
+    else if(choice=='N' || choice=='n')
+    {
+        cout<<"\nEnter the details again:\n";
+        delete(details);
+        Insert(); 
+    }
+    else
+    {
+        cout<<"Enter correct choice :\n";
+        goto choi;
+    }
+    showMenu();
 }
 Node* AVL::rInsert(Node* p, int key,record * details)
 {
@@ -284,9 +312,39 @@ void AVL::Inorder(Node* p)
     }
 }
 
-void AVL::Delete(int key)
+void AVL::Delete()
 {
-    Delete(root,key);
+    choi:
+    cout<<"Enter the id of the employee whose record you want to delete\n";
+    int key;
+    cin>>key;
+    if(searchNode(key))
+    {
+        Delete(root,key);
+        cout<<"deletion succesfull\n";
+        showMenu();
+    }
+    else
+    {
+        cout<<"***Id not present in database***\n";
+        choic:
+        cout<<"Press 1 to re-renter id press 0 to go to main menu:\n";
+        int choice;
+        cin>>choice;
+        if(choice==1)
+        {
+            goto choi;
+        }
+        else if(choice==0)
+        {
+            showMenu();
+        }
+        else
+        {
+            cout<<"press valid number:";
+            goto choic;
+        }
+    }
 }
 Node* AVL::Delete(Node* p, int key)
 {
@@ -353,33 +411,92 @@ Node* AVL::searchNode(int key)
 }
 
 
+/*-------------------------finish of avl data structure----------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+void showMenu()
+{
+    cout<<"\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"\n********Enter your choice for what you want to do :********\n"<<endl;
+    cout<<"**<1> for inserting a new employee record ***\n";
+    cout<<"**<2> for deleting an employee record     ***\n";
+    cout<<"**<3> for searching an employee record    ***\n";
+    cout<<"**<4> for modifying an employee record    ***\n";
+    cout<<"**<5> for viewing all employees record    ***\n";
+    cout<<"**<0> for exiting the program             ***\n";
+    cout<<"\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"\nChoice: ";
+    int choice;
+    choi:
+    cin>>choice;
+    AVL obj;
+    switch(choice)
+    {
+        case 1:
+        obj.Insert();
+        break;
+        case 2:
+        obj.Delete();
+        break;
+        // case 3:
+        // obj.searchEmployee();
+        // break;
+        // case 4:
+        // obj.modifyEmployee();
+        // break;
+        // case 5:
+        // cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        // obj.displayRecords(obj.root);
+        // break;
+        case 0:
+        exit(0);
+        break;
+        default :
+        cout<<"Enter correct choice: ";
+        goto choi;
+    }
+}
+
+void Welcome()
+{
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"**** Welcome to Employement Record Management System ****\n\n";
+    cout<<"*** How this system works ***"<<endl;
+    cout<<"*You will be given number for a particular task. which ever task you want to perform you can "<<endl;
+    cout<<" enter that number and system which guide you to perform that task."<<endl;
+    cout<<"*** Lets begin ***\n";
+    cout<<"**<1> for Entering the System             ***\n";
+    cout<<"**<0> for exiting the program             ***\n";
+    cout<<"\nChoice: ";
+    int choice;
+    choi:
+    cin>>choice;
+    if(choice==1)
+    showMenu();
+    else if(choice==0)
+    return ;
+    else
+    {
+        cout<<"Enter correct choice: ";
+        goto choi;
+    }
+}
+
  
-int main() {
- 
-    // AVL tree;
-    // int A[] = {10, 20, 30, 25, 28, 27, 5};
-    // for (int i=0; i<sizeof(A)/sizeof(A[0]); i++){
-    //     tree.root = tree.rInsert(tree.root, A[i]);
-    // }
-    // tree.Inorder();
-    // cout << endl;
-    // tree.Delete(tree.root, 28);
-    // tree.Inorder();
-    // cout << endl;
-    // record obj;
-    // obj.print_records();
-
-
-    AVL tree;
-
-    tree.Insert();
-    tree.Insert();
-    //tree.Delete(1);
-    // Node *t=tree.searchNode(1);
-    // if(t->data==1)cout<<"Hipyee";
-    tree.Inorder();
-
-
+int main() 
+{
+    Welcome();
 
     return 0;
 }
