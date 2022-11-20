@@ -23,7 +23,6 @@ void showMenu()
     cout<<"\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"\nChoice: ";
-    // AVL obj;
     int choice;
     choi:
     cin>>choice;
@@ -39,11 +38,12 @@ void showMenu()
         showMenu();
         break;
         case 3:
-        //obj.searchEmployee();
+        obj.searchEmployee();
+        showMenu();
         break;
-        // case 4:
-        // obj.modifyEmployee();
-        // break;
+        case 4:
+        obj.modifyEmployee();
+        break;
         case 5:
         cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
         obj.Inorder();

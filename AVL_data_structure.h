@@ -51,7 +51,13 @@ class AVL
 
     //***** Searching for the node *****
     Node* searchNode(int key); //function to search for a node
-    
+
+    //***** Searching for employee *****
+    void searchEmployee();
+
+    //***** Modifying Employee details *****
+    void modifyEmployee();
+
 }obj;
 
 int AVL::NodeHeight(Node* p)
@@ -175,6 +181,7 @@ void AVL::Insert()
 {
     record* details=new record;
     cout<<"Entered record deatils are:\n\n";
+    cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
     details->print_records();
     cout<<"\n *ARE THE DETAILS CORRECT*\n";
     cout<<"Press Y for YES and N for NO\n";
@@ -261,7 +268,7 @@ void AVL::Inorder(Node* p)
     if (p)
     {
         Inorder(p->lchild);
-        cout << p->data << ", " << flush;
+        p->employee_details->print_records();
         Inorder(p->rchild);
     }
 }
@@ -290,9 +297,7 @@ void AVL::Delete()
             goto choi;
         }
         else if(choice==0)
-        {
-    
-        }
+        {}
         else
         {
             cout<<"press valid number:";
@@ -362,4 +367,118 @@ Node* AVL::searchNode(int key)
         else p=p->rchild;
     }
     return NULL;
+}
+
+void AVL::searchEmployee()
+{
+    choi:
+    cout<<"Enter the id of the employee whose record you want to search\n";
+    int key;
+    cin>>key;
+    Node* temp=searchNode(key);
+    if(temp!=NULL)
+    {
+        cout<<"***** Record found *****\n\n";
+        cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        temp->employee_details->print_records();
+    }
+    else
+    {
+        cout<<"***Id not present in database***\n";
+        choic:
+        cout<<"Press 1 to re-renter id press 0 to go to main menu:\n";
+        int choice;
+        cin>>choice;
+        if(choice==1)
+        {
+            goto choi;
+        }
+        else if(choice==0){}
+        else
+        {
+            cout<<"press valid number:";
+            goto choic;
+        }
+    }
+}
+
+void AVL::modifyEmployee()
+{
+    choi:
+    cout<<"Enter the id of the employee whose record you want to modify\n";
+    int key;
+    cin>>key;
+    Node* temp=searchNode(key);
+    if(temp!=NULL)
+    {
+        cout<<"***** Record found *****\n\n";
+        cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        temp->employee_details->print_records();
+        cout<<"\nWhich detail you would like to change:\n";
+        cout<<"**<1> NAME                    ***\n";
+        cout<<"**<2> PHONE                   ***\n";
+        cout<<"**<3> Block/sector/district   ***\n";
+        cout<<"**<4> City                    ***\n";
+        cout<<"**<5> State                   ***\n";
+        cout<<"**<6> Country                 ***\n";
+        cout<<"**<7> Designation             ***\n";
+        cout<<"**<8> Salary                  ***\n";
+        cout<<"**<0> To go to main menu      ***\n";
+
+        int choice;
+        choicee:
+        cin>>choice;
+
+        switch(choice)
+        {
+            case 1:
+            
+            break;
+            case 2:
+            
+            break;
+            case 3:
+            
+            break;
+            case 4:
+            
+            break;
+            case 5:
+            
+            break;
+            case 6:
+            
+            break;
+            case 7:
+            
+            break;
+            case 8:
+            
+            break;
+            case 0:
+            exit(0);
+            break;
+            default :
+            cout<<"Enter correct choice: ";
+            goto choicee;
+        }
+    }
+    else
+    {
+        cout<<"***Id not present in database***\n";
+        choic:
+        cout<<"Press 1 to re-renter id press 0 to go to main menu:\n";
+        int choice;
+        cin>>choice;
+        if(choice==1)
+        {
+            goto choi;
+        }
+        else if(choice==0){}
+        else
+        {
+            cout<<"press valid number:";
+            goto choic;
+        }
+    }
 }

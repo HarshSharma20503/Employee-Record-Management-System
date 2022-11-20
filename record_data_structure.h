@@ -44,16 +44,8 @@ public:
 
     void print_records()
     {
-        cout<<"Name of the emoloyee: "<<name<<endl;
-        cout<<"Phone Number of the emoloyee: "<<phone<<endl;
-        cout<<"Address of the emoloyee: "<<endl;
-        for(int i=0;i<4;i++)
-        {
-            cout<<address[i]<<",";
-        }
-        cout<<endl;
-        cout<<"Designation of the employee :"<<designation<<endl;
-        cout<<"Salary of the employee :"<<salary<<endl;
+        cout<<setw(5)<<id<<"|"<<setw(20)<<name<<"|"<<setw(15)<<phone<<"|"<<setw(24)<<address[0]<<"|"<<setw(14)<<address[1]<<"|"
+        <<setw(17)<<address[2]<<"|"<<setw(14)<<address[3]<<"|"<<setw(15)<<designation<<"|"<<setw(12)<<salary<<"|"<<endl;
     }
 };
 int record::i=0;
