@@ -358,12 +358,14 @@ Node* AVL::Delete(Node* p, int key)
         {
             q = InPre(p->lchild);
             p->data = q->data;
+            p->employee_details=q->employee_details;
             p->lchild = Delete(p->lchild, q->data);
         } 
         else 
         {
             q = InSucc(p->rchild);
             p->data = q->data;
+            p->employee_details=q->employee_details;
             p->rchild = Delete(p->rchild, q->data);
         }
     }
