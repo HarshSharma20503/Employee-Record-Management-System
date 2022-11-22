@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <cstdlib>
+#include "employee_history.h"
 #include "AVL_data_structure.h"
 
 using namespace std;
@@ -15,12 +16,13 @@ void showMenu()
     cout<<"\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"\n********Enter your choice for what you want to do :********\n"<<endl;
-    cout<<"**<1> for inserting a new employee record ***\n";
-    cout<<"**<2> for deleting an employee record     ***\n";
-    cout<<"**<3> for searching an employee record    ***\n";
-    cout<<"**<4> for modifying an employee record    ***\n";
-    cout<<"**<5> for viewing all employees record    ***\n";
-    cout<<"**<0> for exiting the program             ***\n";
+    cout<<"**<1> for inserting a new employee record           ***\n";
+    cout<<"**<2> for deleting an employee record               ***\n";
+    cout<<"**<3> for searching an employee record              ***\n";
+    cout<<"**<4> for modifying an employee record              ***\n";
+    cout<<"**<5> for viewing all employees record (PRESENT)    ***\n";
+    cout<<"**<6> for viewing employees record history (ALL)    ***\n";
+    cout<<"**<0> for exiting the program                       ***\n";
     cout<<"\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"\nChoice: ";
@@ -32,28 +34,45 @@ void showMenu()
     {
         case 1:
         obj.Insert();
+        system("pause");
         showMenu();
         break;
+
         case 2:
         obj.Delete();
+        system("pause");
         showMenu();
         break;
+
         case 3:
         obj.searchEmployee();
+        system("pause");
         showMenu();
         break;
+
         case 4:
         obj.modifyEmployee();
+        system("pause");
         showMenu();
         break;
+
         case 5:
         cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
         obj.Inorder();
+        system("pause");
         showMenu();
         break;
+
+        case 6:
+        employee_history();
+        system("pause");
+        showMenu();
+        break;
+
         case 0:
         exit(0);
         break;
+        
         default :
         cout<<"Enter correct choice: ";
         goto choi;
@@ -62,6 +81,7 @@ void showMenu()
 
 void Welcome()
 {
+    toZero(root1);
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"**** Welcome to Employement Record Management System ****\n\n";

@@ -201,8 +201,9 @@ void AVL::Insert()
     if(choice=='Y' || choice=='y')
     {
         root=rInsert(root, details->id,details);      //calls the function to insert the node with the key
+        string em_his=details->name+details->phone;
+        insert_(em_his);
         cout<<"\n***Insertion succesfull***\n";
-        system("pause");
     }
     else if(choice=='N' || choice=='n')
     {
@@ -284,7 +285,6 @@ Node* AVL::rInsert(Node* p, int key,record * details)
 void AVL::Inorder()
 {
      Inorder(root); 
-     system("pause");
 }
 void AVL::Inorder(Node* p)
 {
@@ -306,7 +306,6 @@ void AVL::Delete()
     {
         Delete(root,key);                         //calls function to delete the node with the key
         cout<<"deletion succesfull\n";
-        system("pause");
     }
     else
     {
@@ -426,7 +425,6 @@ void AVL::searchEmployee()
         cout<<"***** Record found *****\n\n";
         cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
         temp->employee_details->print_records();
-        system("pause");
     }
     else
     {
