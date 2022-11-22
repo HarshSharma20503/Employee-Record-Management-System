@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include <cstdlib>
 #include "record_data_structure.h"
 using namespace std;
 
@@ -192,6 +193,7 @@ void AVL::Insert()
     {
         root=rInsert(root, details->id,details);
         cout<<"\n***Insertion succesfull***\n";
+        system("pause");
     }
     else if(choice=='N' || choice=='n')
     {
@@ -262,6 +264,7 @@ Node* AVL::rInsert(Node* p, int key,record * details)
 void AVL::Inorder()
 {
      Inorder(root); 
+     system("pause");
 }
 void AVL::Inorder(Node* p)
 {
@@ -283,7 +286,7 @@ void AVL::Delete()
     {
         Delete(root,key);
         cout<<"deletion succesfull\n";
-        
+        system("pause");
     }
     else
     {
@@ -381,6 +384,7 @@ void AVL::searchEmployee()
         cout<<"***** Record found *****\n\n";
         cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
         temp->employee_details->print_records();
+        system("pause");
     }
     else
     {

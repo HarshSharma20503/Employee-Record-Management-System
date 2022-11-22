@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
+#include <cstdlib>
 #include "AVL_data_structure.h"
-
 
 using namespace std;
 
@@ -11,6 +11,7 @@ void Welcome();
 
 void showMenu()
 {
+    system("CLS");
     cout<<"\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"\n********Enter your choice for what you want to do :********\n"<<endl;
@@ -43,6 +44,7 @@ void showMenu()
         break;
         case 4:
         obj.modifyEmployee();
+        showMenu();
         break;
         case 5:
         cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
