@@ -42,7 +42,7 @@ public:
         cin>>salary;
     }
 
-    void print_records()
+    void print_records()           //print records 
     {
         cout<<setw(5)<<id<<"|"<<setw(20)<<name<<"|"<<setw(15)<<phone<<"|"<<setw(24)<<address[0]<<"|"<<setw(14)<<address[1]<<"|"
         <<setw(17)<<address[2]<<"|"<<setw(14)<<address[3]<<"|"<<setw(15)<<designation<<"|"<<setw(12)<<salary<<"|"<<endl;

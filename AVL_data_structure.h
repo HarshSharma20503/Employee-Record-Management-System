@@ -3,87 +3,91 @@
 #include "record_data_structure.h"
 using namespace std;
 
+//class node for the every node in avl data structure
 class Node 
 {
     public:
 
     //Things required for AVL
-    Node* lchild;
-    int data;
-    Node* rchild;
-    int height;
+    Node* lchild;     //left child
+    int data;         //key for the avl which is same as the id of the employee
+    Node* rchild;     //right child
+    int height;       //stores height of that node
 
     //Pointer to the record
     record * employee_details;
 };
 
+//class avl to create required data structure
 class AVL
 {
     public:
 
-    Node* root;
+    Node* root;       //stores root node of the avl tree
     
-    AVL()
+    AVL()             //constructor to initialise root as null 
     { 
         root = NULL; 
     }
  
     //***** Helper methods for inserting/deleting *****
-    int NodeHeight(Node* p); 
-    int BalanceFactor(Node* p); //returns balance factor of the node
-    Node* LLRotation(Node* p); //solves LL imbalance 
-    Node* RRRotation(Node* p); //solves RR imbalance
-    Node* LRRotation(Node* p); //solves LR imbalance
-    Node* RLRotation(Node* p); //solves RL imbalance
-    Node* InPre(Node* p); //returns inorder predecessor of the node
-    Node* InSucc(Node* p); //return inorder successor of the node
+    int NodeHeight(Node* p);   
+    int BalanceFactor(Node* p);      //returns balance factor of the node
+    Node* LLRotation(Node* p);       //solves LL imbalance 
+    Node* RRRotation(Node* p);       //solves RR imbalance
+    Node* LRRotation(Node* p);       //solves LR imbalance
+    Node* RLRotation(Node* p);       //solves RL imbalance
+    Node* InPre(Node* p);            //returns inorder predecessor of the node
+    Node* InSucc(Node* p);           //return inorder successor of the node
  
     //***** Recursive insert function *****
-    void Insert();
+    void Insert();                   //helper function to call recursive insert function
     Node* rInsert(Node* p, int key,record * details);
     
     //****** Traversal ******
-    void Inorder(); //helper function to call recursive inorder function
+    void Inorder();                  //helper function to call recursive inorder function
     void Inorder(Node* p);
 
     //***** Delete function *****
-    void Delete();
+    void Delete();                   //helper function to call recursive delete function
     Node* Delete(Node* p, int key);
 
     //***** Searching for the node *****
-    Node* searchNode(int key); //function to search for a node
+    Node* searchNode(int key);       //function to search for a node
 
     //***** Searching for employee *****
-    void searchEmployee();
+    void searchEmployee();           //function to search of a specific employee
 
     //***** Modifying Employee details *****
-    void modifyEmployee();
+    void modifyEmployee();           //function to modify details of specific employee
 
 }obj;
 
 int AVL::NodeHeight(Node* p)
 { 
-    int hl;
-    int hr;
-    hl = (p && p->lchild) ? p->lchild->height : 0;
-    hr = (p && p->rchild) ? p->rchild->height : 0;
-    return hl>hr?hl+1:hr+1;
+    int hl;                                                //to store height of left subtree
+    int hr;                                                //to store height of right subtree
+    hl = (p && p->lchild) ? p->lchild->height : 0;         //calculate height of left subtree
+    hr = (p && p->rchild) ? p->rchild->height : 0;         //calculate height of right subtree
+    return hl>hr?hl+1:hr+1;                                //return height of current node
 }
  
 int AVL::BalanceFactor(Node *p)
 {
-    int hl;
-    int hr;
-    hl = (p && p->lchild) ? p->lchild->height : 0;
-    hr = (p && p->rchild) ? p->rchild->height : 0;
-    return hl - hr;
+    int hl;                                                //to store height of left subtree
+    int hr;                                                //to store height of right subtree
+    hl = (p && p->lchild) ? p->lchild->height : 0;         //calculate height of left subtree
+    hr = (p && p->rchild) ? p->rchild->height : 0;         //return height of current node
+    return hl - hr;                                        //return balance factor of current node
 }
  
 Node* AVL::LLRotation(Node *p) 
 {
-    Node* pl = p->lchild;
-    Node* plr = pl->rchild;
-    pl->rchild = p;
+    Node* pl = p->lchild;                       //pl to store leftchild of p
+    Node* plr = pl->rchild;                     //plr to store rightchild of pl
+
+    //changing links
+    pl->rchild = p;                             
     p->lchild = plr;
  
     // Update height
@@ -100,9 +104,11 @@ Node* AVL::LLRotation(Node *p)
  
 Node* AVL::RRRotation(Node *p) 
 {
-    Node* pr = p->rchild;
-    Node* prl = pr->lchild;
-    pr->lchild = p;
+    Node* pr = p->rchild;                        //pr to store rightchild of p
+    Node* prl = pr->lchild;                      //prl to store leftchild of pr
+
+    //changing links
+    pr->lchild = p;                              
     p->rchild = prl;
  
     // Update height
@@ -119,11 +125,12 @@ Node* AVL::RRRotation(Node *p)
  
 Node* AVL::LRRotation(Node *p) 
 {
-    Node* pl = p->lchild;
-    Node* plr = pl->rchild;
+    Node* pl = p->lchild;                         //pl to store leftchild of p 
+    Node* plr = pl->rchild;                       //plr to store rightchild of pl
+
+    //changing links
     pl->rchild = plr->lchild;
     p->lchild = plr->rchild;
- 
     plr->lchild = pl;
     plr->rchild = p;
  
@@ -142,8 +149,10 @@ Node* AVL::LRRotation(Node *p)
  
 Node* AVL::RLRotation(Node *p) 
 {
-    Node* pr = p->rchild;
-    Node* prl = pr->lchild;
+    Node* pr = p->rchild;                           //pr to store rightchild of p
+    Node* prl = pr->lchild;                         //prl to store leftchild of pr
+
+    //changing links
     pr->lchild = prl->rchild;
     p->rchild = prl->lchild;
     prl->rchild = pr;
@@ -164,7 +173,7 @@ Node* AVL::RLRotation(Node *p)
   
 Node* AVL::InPre(Node* p)
 {
-    while (p && p->rchild != NULL){
+    while (p && p->rchild != NULL){         //travels to rightmost node of the given subtree root node
         p = p->rchild;
     }
     return p;
@@ -172,7 +181,7 @@ Node* AVL::InPre(Node* p)
 
 Node* AVL::InSucc(Node *p) 
 {
-    while (p && p->lchild != NULL){
+    while (p && p->lchild != NULL){         //travels to leftmost node of the given subtree root node
         p = p->lchild;
     }
     return p;
@@ -180,7 +189,7 @@ Node* AVL::InSucc(Node *p)
 
 void AVL::Insert()
 {
-    record* details=new record;
+    record* details=new record;             //create object of record class and calls its constructor to take input for details
     cout<<"Entered record deatils are:\n\n";
     cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
     details->print_records();
@@ -191,7 +200,7 @@ void AVL::Insert()
     cin>>choice;
     if(choice=='Y' || choice=='y')
     {
-        root=rInsert(root, details->id,details);
+        root=rInsert(root, details->id,details);      //calls the function to insert the node with the key
         cout<<"\n***Insertion succesfull***\n";
         system("pause");
     }
@@ -223,38 +232,49 @@ void AVL::Insert()
         goto choi;
     }
 }
+
 Node* AVL::rInsert(Node* p, int key,record * details)
 {
     Node* t;
 
-    if (p == NULL)
+    if (p == NULL)                          //if node is null means we reached the leaf node than insert the node there
     {
         t = new Node;
         t->data = key;
         t->lchild = NULL;
         t->rchild = NULL;
         t->height = 1; 
-        t->employee_details=details;// Starting height from 1 onwards instead of 0
+        t->employee_details=details;         // Starting height from 1 onwards instead of 0
         return t;
     }
  
-    if (key < p->data){
-        p->lchild = rInsert(p->lchild, key,details);
-    } else if (key > p->data){
-        p->rchild = rInsert(p->rchild, key,details);
+    if (key < p->data)
+    {
+        p->lchild = rInsert(p->lchild, key,details);   //if key smaller than move to left subtree
+    } 
+    else if (key > p->data)
+    {
+        p->rchild = rInsert(p->rchild, key,details);   //if key is larger than move to right subtree
     }
  
     // Update height
     p->height = NodeHeight(p);
  
     // Balance Factor and Rotation
-    if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) {
+    if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) 
+    {
         return LLRotation(p);
-    } else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == -1){
+    } 
+    else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == -1)
+    {
         return LRRotation(p);
-    } else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == -1){
+    } 
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == -1)
+    {
         return RRRotation(p);
-    } else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 1){
+    } 
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 1)
+    {
         return RLRotation(p);
     }
  
@@ -271,7 +291,7 @@ void AVL::Inorder(Node* p)
     if (p)
     {
         Inorder(p->lchild);
-        p->employee_details->print_records();
+        p->employee_details->print_records();     // prints all the details by calling print_records function
         Inorder(p->rchild);
     }
 }
@@ -284,7 +304,7 @@ void AVL::Delete()
     cin>>key;
     if(searchNode(key)!=NULL)
     {
-        Delete(root,key);
+        Delete(root,key);                         //calls function to delete the node with the key
         cout<<"deletion succesfull\n";
         system("pause");
     }
@@ -310,7 +330,8 @@ void AVL::Delete()
 }
 Node* AVL::Delete(Node* p, int key)
 {
-    if (p == NULL){
+    if (p == NULL)
+    {
         return NULL;
     }
  
@@ -322,17 +343,25 @@ Node* AVL::Delete(Node* p, int key)
         return NULL;
     }
  
-    if (key < p->data){
+    if (key < p->data)
+    {
         p->lchild = Delete(p->lchild, key);
-    } else if (key > p->data){
+    } 
+    else if (key > p->data)
+    {
         p->rchild = Delete(p->rchild, key);
-    } else {
-        Node* q;
-        if (NodeHeight(p->lchild) > NodeHeight(p->rchild)){
+    } 
+    else                                                            //if key matches with the key to current node key than
+    {                                                               //swap the node value with inorder successor or inorder predecessor
+        Node* q;                                                    //compare the height of the left and right subtree to check 
+        if (NodeHeight(p->lchild) > NodeHeight(p->rchild))          //which node to put at the place of the deleted node
+        {
             q = InPre(p->lchild);
             p->data = q->data;
             p->lchild = Delete(p->lchild, q->data);
-        } else {
+        } 
+        else 
+        {
             q = InSucc(p->rchild);
             p->data = q->data;
             p->rchild = Delete(p->rchild, q->data);
@@ -343,17 +372,28 @@ Node* AVL::Delete(Node* p, int key)
     p->height = NodeHeight(p);
  
     // Balance Factor and Rotation
-    if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) {  // L1 Rotation
+    if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) 
+    {  
         return LLRotation(p);
-    } else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == -1){  // L-1 Rotation
+    } 
+    else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == -1)
+    {  
         return LRRotation(p);
-    } else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == -1){  // R-1 Rotation
+    } 
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == -1)
+    { 
         return RRRotation(p);
-    } else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 1){  // R1 Rotation
+    } 
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 1)
+    {  
         return RLRotation(p);
-    } else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 0){  // L0 Rotation
+    } 
+    else if (BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 0)
+    {  
         return LLRotation(p);
-    } else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 0){  // R0 Rotation
+    } 
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->rchild) == 0)
+    {  
         return RRRotation(p);
     }
  
@@ -433,6 +473,7 @@ void AVL::modifyEmployee()
         choicee:
         cin>>choice;
 
+        //switch case for menu based input
         switch(choice)
         {
             case 1:
