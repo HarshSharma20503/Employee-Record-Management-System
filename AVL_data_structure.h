@@ -432,28 +432,44 @@ void AVL::modifyEmployee()
         switch(choice)
         {
             case 1:
-            
+            cout<<"Enter new name:\n";
+            getline(cin>>ws,temp->employee_details->name);
+            cout<<"\n**** Name updated ****\n";
             break;
             case 2:
-            
+            cout<<"Enter new phone number:\n";
+            getline(cin>>ws,temp->employee_details->phone);
+            cout<<"\n**** Phone number updated ****\n";
             break;
             case 3:
-            
+            cout<<"Enter new Block/sector/district:\n";
+            getline(cin>>ws,temp->employee_details->address[0]);
+            cout<<"\n**** Block/sector/district updated ****\n";
             break;
             case 4:
-            
+            cout<<"Enter new city:\n";
+            getline(cin>>ws,temp->employee_details->address[1]);
+            cout<<"\n**** city updated ****\n";
             break;
             case 5:
-            
+            cout<<"Enter new state:\n";
+            getline(cin>>ws,temp->employee_details->address[2]);
+            cout<<"\n**** state updated ****\n";
             break;
             case 6:
-            
+            cout<<"Enter new country:\n";
+            getline(cin>>ws,temp->employee_details->address[3]);
+            cout<<"\n**** country updated ****\n";
             break;
             case 7:
-            
+            cout<<"Enter new designation:\n";
+            getline(cin>>ws,temp->employee_details->designation);
+            cout<<"\n**** designation updated ****\n";
             break;
             case 8:
-            
+            cout<<"Enter new salary:\n";
+            cin>>temp->employee_details->salary;
+            cout<<"\n**** salary updated ****\n";
             break;
             case 0:
             exit(0);
@@ -461,6 +477,23 @@ void AVL::modifyEmployee()
             default :
             cout<<"Enter correct choice: ";
             goto choicee;
+        }
+        cout<<"\n***New details are:***\n\n";
+        cout<<"ID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        temp->employee_details->print_records();
+        zchoi:
+        cout<<"Do you want to make any further changes:\n";
+        cout<<"press y to for yes and n to go to main ";
+        char ch;cin>>ch;
+        if(ch=='y' || ch=='Y')
+        {
+            goto choi;
+        }
+        else if(ch=='n' || ch=='N'){}
+        else 
+        {
+            cout<<"Enter valid choice\n";
+            goto zchoi;
         }
     }
     else
