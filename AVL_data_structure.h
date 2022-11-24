@@ -201,7 +201,7 @@ void AVL::Insert()
     if(choice=='Y' || choice=='y')
     {
         root=rInsert(root, details->id,details);      //calls the function to insert the node with the key
-        string em_his=details->name+details->phone;
+        string em_his=details->name+" "+details->phone;
         insert_(em_his);
         cout<<"\n***Insertion succesfull***\n";
     }
@@ -210,7 +210,7 @@ void AVL::Insert()
         cout<<"\nEnter the details again:\n";
         delete(details);
         choic:
-        cout<<"Press 1 to re-enter id press 0 to go to main menu:\n";
+        cout<<"Press 1 to re-enter details press 0 to go to main menu:\n";
         int choice;
         cin>>choice;
         if(choice==1)
@@ -304,21 +304,41 @@ void AVL::Delete()
     cin>>key;
     if(searchNode(key)!=NULL)
     {
-        Delete(root,key);                         //calls function to delete the node with the key
-        cout<<"deletion succesfull\n";
+        Node* temp=searchNode(key);
+        cout<<"\nID   |        Name        |     Phone     |  Block/sector/district |     City     |      State      |    Country   |  Designation  |   Salary   |"<<endl;
+        temp->employee_details->print_records();
+        cout<<endl;
+        choi1:
+        cout<<"******Are you sure you want to delete this record******\n\n";
+        cout<<"press y for yes and n for no\n";
+        char ch;
+        cin>>ch;
+        if(ch=='y' || ch=='Y')
+        {
+            Delete(root,key);                         //calls function to delete the node with the key
+            cout<<"deletion succesfull\n";
+        }
+        else if(ch=='n' || ch=='N')
+        {}
+        else
+        {
+            cout<<"\n****Press valid option key****\n";
+            goto choi1;
+        }
+        
     }
     else
     {
         cout<<"***Id not present in database***\n";
         choic:
         cout<<"Press 1 to re-renter id press 0 to go to main menu:\n";
-        int choice;
+        char choice;
         cin>>choice;
-        if(choice==1)
+        if(choice=='1')
         {
             goto choi;
         }
-        else if(choice==0)
+        else if(choice=='0')
         {}
         else
         {
@@ -431,13 +451,13 @@ void AVL::searchEmployee()
         cout<<"***Id not present in database***\n";
         choic:
         cout<<"Press 1 to re-renter id press 0 to go to main menu:\n";
-        int choice;
+        char choice;
         cin>>choice;
-        if(choice==1)
+        if(choice=='1')
         {
             goto choi;
         }
-        else if(choice==0){}
+        else if(choice=='0'){}
         else
         {
             cout<<"press valid number:";
@@ -469,55 +489,55 @@ void AVL::modifyEmployee()
         cout<<"**<8> Salary                  ***\n";
         cout<<"**<0> To go to main menu      ***\n";
 
-        int choice;
+        char choice;
         choicee:
         cin>>choice;
 
         //switch case for menu based input
         switch(choice)
         {
-            case 1:
+            case '1':
             cout<<"Enter new name:\n";
             getline(cin>>ws,temp->employee_details->name);
             cout<<"\n**** Name updated ****\n";
             break;
-            case 2:
+            case '2':
             cout<<"Enter new phone number:\n";
             getline(cin>>ws,temp->employee_details->phone);
             cout<<"\n**** Phone number updated ****\n";
             break;
-            case 3:
+            case '3':
             cout<<"Enter new Block/sector/district:\n";
             getline(cin>>ws,temp->employee_details->address[0]);
             cout<<"\n**** Block/sector/district updated ****\n";
             break;
-            case 4:
+            case '4':
             cout<<"Enter new city:\n";
             getline(cin>>ws,temp->employee_details->address[1]);
             cout<<"\n**** city updated ****\n";
             break;
-            case 5:
+            case '5':
             cout<<"Enter new state:\n";
             getline(cin>>ws,temp->employee_details->address[2]);
             cout<<"\n**** state updated ****\n";
             break;
-            case 6:
+            case '6':
             cout<<"Enter new country:\n";
             getline(cin>>ws,temp->employee_details->address[3]);
             cout<<"\n**** country updated ****\n";
             break;
-            case 7:
+            case '7':
             cout<<"Enter new designation:\n";
             getline(cin>>ws,temp->employee_details->designation);
             cout<<"\n**** designation updated ****\n";
             break;
-            case 8:
+            case '8':
             cout<<"Enter new salary:\n";
             cin>>temp->employee_details->salary;
             cout<<"\n**** salary updated ****\n";
             break;
-            case 0:
-            exit(0);
+            case '0':
+            return;
             break;
             default :
             cout<<"Enter correct choice: ";
@@ -528,7 +548,7 @@ void AVL::modifyEmployee()
         temp->employee_details->print_records();
         zchoi:
         cout<<"Do you want to make any further changes:\n";
-        cout<<"press y to for yes and n to go to main ";
+        cout<<"press y to for yes and n to go to main\n";
         char ch;cin>>ch;
         if(ch=='y' || ch=='Y')
         {
@@ -555,7 +575,7 @@ void AVL::modifyEmployee()
         else if(choice==0){}
         else
         {
-            cout<<"press valid number:";
+            cout<<"\n****Press valid number****\n\n";
             goto choic;
         }
     }

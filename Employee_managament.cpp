@@ -91,13 +91,13 @@ void Welcome()
     cout<<"*** Lets begin ***\n";
     cout<<"**<1> for Entering the System             ***\n";
     cout<<"**<0> for exiting the program             ***\n";
-    cout<<"\nChoice: ";
-    int choice;
     choi:
+    cout<<"\nChoice: ";
+    char choice;
     cin>>choice;
-    if(choice==1)
+    if(choice=='1')
     showMenu();
-    else if(choice==0)
+    else if(choice=='0')
     return ;
     else
     {
