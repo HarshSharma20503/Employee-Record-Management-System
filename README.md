@@ -34,6 +34,14 @@ The key functionalities of this Employee Record Management System include:
 - Viewing all employees' records (present)
 - Viewing employees' record history (all)
 
+## Data Structure Used
+
+Two main data structures are utilized in this project:
+
+1. **Trie**: Used for efficient searching and retrieval of employee records based on keywords.
+
+2. **AVL Tree**: Used for maintaining a balanced binary search tree for efficient insertion, deletion, and modification of employee records.
+
 ## How to Run
 
 1. Clone or download the project repository.
